@@ -1,0 +1,167 @@
+<?php 
+$msg = '';
+$msgClass = '';
+
+    if (filter_has_var(INPUT_POST, 'submit')){
+        $name = htmlspecialchars($_POST['name']);
+        $email = htmlspecialchars($_POST['email']);
+        $subject = htmlspecialchars($_POST['subject']);
+
+        if (!empty($email) && !empty($name) && !empty($subject) && !empty($message)){
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) === false){
+                $msg = 'Please enter a valid email address.';
+                $msgClass = 'alert-danger';
+            } else {
+                $toEmail = '';
+                $body = '<h2>E-mail from:</h2>
+                    <h4>Name:</h4><p>'.$name.'</p>
+                    <h4>Email:</h4><p>'.$email.'</p>
+                    <h4>Message:</h4><p>'.$message.'</p>';
+                
+                $headers = "MIME-Version: 1.0" ."/r/n";
+                $headers .= "Content-Type:text/html;charset=UTF-8" . "/r/n";
+
+                $headers .= "From: " .$name. "<".email.">". "/r/n";
+
+                if(mail($toEmail, $subject, $body, $headers)){
+                    $msg = 'Your message has been sent!';
+                    $msgClass = 'alert-success';
+                } else {
+                    $msg = 'Your message was not sent!';
+                    $msgClass = 'alert-danger';
+                }
+            }
+        } else {
+            $msg = 'Please fill in all fields.';
+            $msgClass = 'alert-danger';
+        }
+    }
+
+?>
+
+
+<html>
+    <head>
+        <title>Kathleen Dunn</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <!-- custom CSS file -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+         <!-- Link google font -->
+         <link href='https://fonts.googleapis.com/css?family=Archivo Narrow' rel='stylesheet'>
+    </head>
+
+    <body>
+    <div class="container">
+
+        <div class="jumbotron">
+            <div class="headertext">
+            <h1>Kathleen Dunn</h1>
+            <h2>Choral Artist and Music Educator</h2>
+            </div>
+        </div>
+    
+        <?php include "header.html" ?>
+
+        <div class="row cont">
+            
+            
+            <div class="col-sm-12">
+            <p>
+                <h1 style="text-align: center;">Contact Kathleen Dunn</h1>
+            </p>
+            </div>
+        </div>
+        <div class="footerspacer"></div>
+        <div class="row contact">
+            <?php if($msg != ''): ?>
+                <div class="alert <?php echo $msgClass; ?>"></div>
+            <?php endif; ?>
+            <form id="contact-form" name="contact-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6">
+                    <div class="md-form mb-0">
+                        <input type="text" id="name" name="name" class="form-control" 
+                        value="<?php echo isset($_POST['name']) ? $name : ''; ?>">
+                        <label for="name" class="">Your name</label>
+                    </div>
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6">
+                    <div class="md-form mb-0">
+                        <input type="text" id="email" name="email" class="form-control" 
+                        value="<?php echo isset($_POST['email']) ? $email : ''; ?>">
+                        <label for="email" class="">Your email</label>
+                    </div>
+                </div>
+                <!--Grid column-->
+
+            </div>
+            <!--Grid row-->
+
+            <!--Grid row-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="md-form mb-0">
+                        <input type="text" id="subject" name="subject" class="form-control"
+                         value="<?php echo isset($_POST['subject']) ? $subject : ''; ?>">
+                        <label for="subject" class="">Subject</label>
+                    </div>
+                </div>
+            </div>
+            <!--Grid row-->
+
+            <!--Grid row-->
+            <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-12">
+
+                    <div class="md-form">
+                        <textarea type="text" style="resize: vertical;" id="message"
+                        name="message" rows="2" class="form-control md-textarea" 
+                        value="<?php echo isset($_POST['message']) ? $message : ''; ?>"></textarea>
+                        <label for="message">Your message</label>
+                    </div>
+
+                </div>
+            </form><br>
+            </div>
+            <div class="row" style="text-align: center;">
+                <p class="alert-danger">
+                    Alert: This form is for testing purposes only.<br>
+                    Messages will not be sent!<br>
+                    If you would like to message Kathleen, feel free to send an e-mail to:<br>
+                    KathleenDunnVoice@gmail.com
+                </p>
+                <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a>
+            </div>
+        </div>
+        <div class="footerspacer"></div>
+        <div class="row">
+            <div class="col-sm-12">
+                <img width=100% src="https://i.ibb.co/M9N6ZtT/kitdunnchoir2-5.jpg">
+            </div>
+        </div>
+        <div class="footerspacer"></div>
+        <div class="footer">
+            <p>
+                View Kathleen's profile on <a href="https://www.linkedin.com/in/kathleendunnmusic">LinkedIn.</a> <br>
+                Follow Kathleen's journey on <a href="https://twitter.com/KathleenCDunn">Twitter.</a><br>
+            </p>
+        </div>
+        </div>
+    </body>
+</html>
