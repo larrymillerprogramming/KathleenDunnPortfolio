@@ -14,9 +14,6 @@ body {
     .textContent {
         padding-left: 0px !important;
     }
-    .headshot {
-        width: 50% !important;
-    }
 }
 .profilepicture {
     background-color:#eeeeee;
