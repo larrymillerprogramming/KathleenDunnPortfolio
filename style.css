@@ -15,7 +15,7 @@ body {
         padding-left: 0px !important;
     }
     .headshot {
-        width: 50%;
+        width: 50% !important;
     }
 }
 .profilepicture {
